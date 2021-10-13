@@ -4,7 +4,7 @@
 
 ## Requisites
 
-- node >= 10.16.0
+- node = 12.x
 
 ## Install
 
