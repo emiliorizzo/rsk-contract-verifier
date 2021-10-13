@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import path from 'path'
-import { readFile, readDir } from './lib'
+import { readFile, readDir, isDir } from './lib'
 import { argKey, getArgs } from '@rsksmart/rsk-js-cli'
 
 const opts = {
@@ -42,14 +42,20 @@ async function convert (file, dir, payloadFile) {
   }
 }
 
-async function loadImports (dir) {
+async function loadImports (dir, imports) {
+  imports = imports || []
   try {
-    let imports = []
     if (!dir) return imports
     let files = await readDir(path.resolve(dir))
     for (let name of files) {
-      let contents = await loadFile(path.resolve(dir, name))
-      if (contents) imports.push({ name, contents })
+      const filePath = path.resolve(dir, name)
+      if (isDir(filePath)) {
+        const i = await loadImports(filePath, imports)
+        imports = imports.concat(i)
+      } else {
+        let contents = await loadFile(filePath)
+        if (contents) imports.push({ name, contents })
+      }
     }
     return imports
   } catch (err) {

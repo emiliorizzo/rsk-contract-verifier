@@ -11,6 +11,8 @@ export const readFile = file => util.promisify(fs.readFile)(path.resolve(file))
 
 export const readDir = util.promisify(fs.readdir)
 
+export const isDir = file => fs.statSync(file).isDirectory()
+
 export function showResult (result, full) {
   try {
     if (!result || typeof result !== 'object') throw new Error('Empty result')
