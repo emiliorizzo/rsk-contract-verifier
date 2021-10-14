@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.decodeConstructorArgs = exports.normalizeOutput = exports.encodeConstructorArgs = exports.getConstructorTypes = exports.getTypesFromAbi = exports.getConstructorAbi = void 0;var _rskUtils = require("@rsksmart/rsk-utils");
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.normalizeOutput = exports.getTypesFromAbi = exports.getConstructorTypes = exports.getConstructorAbi = exports.encodeConstructorArgs = exports.decodeConstructorArgs = void 0;var _rskUtils = require("@rsksmart/rsk-utils");
 var _abi = require("@ethersproject/abi");
 var _bn = require("bn.js");
 
@@ -26,11 +26,11 @@ const decode = (types, value) => {
   }
 };
 
-const getConstructorAbi = abi => abi.filter(x => x.type === 'constructor')[0];exports.getConstructorAbi = getConstructorAbi;
+const getConstructorAbi = (abi) => abi.filter((x) => x.type === 'constructor')[0];exports.getConstructorAbi = getConstructorAbi;
 
-const getTypesFromAbi = abiDef => abiDef.inputs.map(x => x.type);exports.getTypesFromAbi = getTypesFromAbi;
+const getTypesFromAbi = (abiDef) => abiDef.inputs.map((x) => x.type);exports.getTypesFromAbi = getTypesFromAbi;
 
-const getConstructorTypes = abi => getTypesFromAbi(getConstructorAbi([...abi]));exports.getConstructorTypes = getConstructorTypes;
+const getConstructorTypes = (abi) => getTypesFromAbi(getConstructorAbi([...abi]));exports.getConstructorTypes = getConstructorTypes;
 
 const encodeConstructorArgs = (args, abi) => {
   const types = getConstructorTypes(abi);
@@ -44,7 +44,7 @@ const encodeConstructorArgs = (args, abi) => {
   return encoded ? encoded.toString('hex') : encoded;
 };exports.encodeConstructorArgs = encodeConstructorArgs;
 
-const normalizeOutput = out => {
+const normalizeOutput = (out) => {
   if (Array.isArray(out)) return out.map(normalizeOutput);
   if ((0, _bn.isBN)(out)) out = (0, _rskUtils.add0x)(out.toString(16));
   if ((0, _rskUtils.isAddress)(out)) out = (0, _rskUtils.add0x)(out.toLowerCase());

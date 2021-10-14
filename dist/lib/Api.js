@@ -15,11 +15,11 @@ function Api(config, { log }) {
     apiResponse(socket, 'verify', { error, data, request });
   };
 
-  verifier.events.on(_ContractVerifier.EVENTS.VERIFICATION, result => {
+  verifier.events.on(_ContractVerifier.EVENTS.VERIFICATION, (result) => {
     resolveId(result);
   });
 
-  verifier.events.on(_ContractVerifier.EVENTS.ERROR, result => {
+  verifier.events.on(_ContractVerifier.EVENTS.ERROR, (result) => {
     resolveId(result);
   });
 

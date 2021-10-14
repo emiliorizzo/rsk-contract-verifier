@@ -7,12 +7,12 @@ function Queue() {
   const getId = () => {
     return (0, _utils.randomHexString)();
   };
-  const add = payload => {
+  const add = (payload) => {
     const id = getId();
     queue.set(id, payload);
     return id;
   };
-  const remove = id => {
+  const remove = (id) => {
     queue.delete(id);
   };
 
@@ -23,7 +23,7 @@ function Queue() {
     return [id, payload];
   };
 
-  const get = id => {
+  const get = (id) => {
     return queue.get(id);
   };
 

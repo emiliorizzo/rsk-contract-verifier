@@ -12,18 +12,18 @@ const socket = _socket.default.connect(url, { reconnect: true });
 console.log(`Waiting for WS on ${url}`);
 let payload;
 
-socket.on('connect', async data => {
+socket.on('connect', async (data) => {
   console.log('Connected! ✌');
   console.log(`sending payload`);
   payload = await createPayload();
   socket.emit('data', payload);
 });
 
-socket.on('disconnect', socket => {
+socket.on('disconnect', (socket) => {
   console.log('Disconnected ☹');
 });
 
-socket.on('data', async res => {
+socket.on('data', async (res) => {
   let { error, data } = res;
   if (error) throw new Error(error);
   console.log();

@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.load = load;exports.createDirs = createDirs;exports.create = create;exports.default = exports.config = void 0;var _defaultConfig = _interopRequireDefault(require("./defaultConfig"));
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.config = void 0;exports.create = create;exports.createDirs = createDirs;exports.default = void 0;exports.load = load;var _defaultConfig = _interopRequireDefault(require("./defaultConfig"));
 var _path = _interopRequireDefault(require("path"));
 var _fs = _interopRequireDefault(require("fs"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 

@@ -5,7 +5,7 @@ var _rskUtils = require("@rsksmart/rsk-utils");function _interopRequireDefault(o
  * solc-js libraryHashPlaceholder
  * see: solc-js/linker.js
  */
-const libraryHashPlaceholder = input => {
+const libraryHashPlaceholder = (input) => {
   return '$' + (0, _rskUtils.keccak256)(input).toString('hex').slice(0, 34) + '$';
 };
 

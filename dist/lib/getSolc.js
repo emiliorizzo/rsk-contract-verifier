@@ -21,7 +21,7 @@ function GetSolc({ solcCache, solcUrl, listUrl }) {
     _fs.default.mkdirSync(DIR);
   }
 
-  const getVersionUrl = fileName => `${solcUrl}/${fileName}`;
+  const getVersionUrl = (fileName) => `${solcUrl}/${fileName}`;
 
   const isValidHash = (code, hash) => (0, _utils.getHash)(code, 'utf8') === hash;
 
@@ -36,27 +36,27 @@ function GetSolc({ solcCache, solcUrl, listUrl }) {
     if (data) versionsList = data;
   };
 
-  const getVersionData = async version => {
+  const getVersionData = async (version) => {
     try {
       const list = await getList();
       const { builds, releases, latestRelease } = list;
       if (version === 'latest') version = latestRelease;
       if ((0, _utils.isReleaseVersion)(version)) {
         const fileName = releases[version];
-        return builds.find(item => item.path === fileName);
+        return builds.find((item) => item.path === fileName);
       }
-      return builds.find(item => item.longVersion === version);
+      return builds.find((item) => item.longVersion === version);
     } catch (err) {
       return Promise.reject(err);
     }
   };
 
-  const getFilePath = fileName => _path.default.join(DIR, fileName);
+  const getFilePath = (fileName) => _path.default.join(DIR, fileName);
 
-  const load = async version => {
+  const load = async (version) => {
     try {
       const versionData = await getVersionData(version);
-      if (!versionData) throw new Error(`Unkown version ${version}`);
+      if (!versionData) throw new Error(`Unknown version ${version}`);
       const { keccak256, path: fileName } = versionData;
       let code = await loadFromDisk(fileName);
       if (!code || !isValidHash(code, keccak256)) code = await downloadAndSave(fileName, keccak256);
@@ -77,7 +77,7 @@ function GetSolc({ solcCache, solcUrl, listUrl }) {
     }
   };
 
-  const isCached = async fileName => {
+  const isCached = async (fileName) => {
     try {
       const stat = await getStat(getFilePath(fileName));
       return stat.isFile();
@@ -86,7 +86,7 @@ function GetSolc({ solcCache, solcUrl, listUrl }) {
     }
   };
 
-  const loadFromDisk = async fileName => {
+  const loadFromDisk = async (fileName) => {
     try {
       const filePath = getFilePath(fileName);
       const cached = await isCached(fileName);
@@ -108,7 +108,7 @@ function GetSolc({ solcCache, solcUrl, listUrl }) {
       return Promise.reject(err);
     }
   };
-  const download = async url => {
+  const download = async (url) => {
     try {
       const res = await _axios.default.get(url);
       if (res.status === 200) {

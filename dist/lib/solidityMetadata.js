@@ -1,8 +1,8 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.searchMetadata = exports.encodeMetadata = exports.decodeMetadata = exports.isValidMetadata = exports.isValidMetadataLength = exports.getMetadataStart = exports.removeEmptyBytesFromBytecodeEnd = exports.getMetadataLength = void 0;var _rskUtils = require("@rsksmart/rsk-utils");
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.searchMetadata = exports.removeEmptyBytesFromBytecodeEnd = exports.isValidMetadataLength = exports.isValidMetadata = exports.getMetadataStart = exports.getMetadataLength = exports.encodeMetadata = exports.decodeMetadata = void 0;var _rskUtils = require("@rsksmart/rsk-utils");
 var _utils = require("../lib/utils");
 var _cbor = _interopRequireDefault(require("cbor"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
-const getMetadataLength = bytecode => {
+const getMetadataLength = (bytecode) => {
   bytecode = (0, _rskUtils.toBuffer)(bytecode);
   const pos = bytecode.length - 2;
   if (pos > 0) {
@@ -11,7 +11,7 @@ const getMetadataLength = bytecode => {
   }
 };exports.getMetadataLength = getMetadataLength;
 
-const removeEmptyBytesFromBytecodeEnd = bytecode => {
+const removeEmptyBytesFromBytecodeEnd = (bytecode) => {
   bytecode = Buffer.from([...(0, _rskUtils.toBuffer)(bytecode)]);
   while (getMetadataLength(bytecode) === 0) {
     bytecode = bytecode.slice(0, bytecode.length - 2);
@@ -19,27 +19,27 @@ const removeEmptyBytesFromBytecodeEnd = bytecode => {
   return bytecode;
 };exports.removeEmptyBytesFromBytecodeEnd = removeEmptyBytesFromBytecodeEnd;
 
-const getMetadataStart = bytecode => {
+const getMetadataStart = (bytecode) => {
   bytecode = (0, _rskUtils.toBuffer)(bytecode);
   const len = getMetadataLength(bytecode);
   return len < bytecode.length ? bytecode.length - getMetadataLength(bytecode) - 2 : 0;
 };exports.getMetadataStart = getMetadataStart;
 
-const isValidMetadataLength = metadata => {
+const isValidMetadataLength = (metadata) => {
   if (!metadata) return false;
   metadata = Buffer.from([...(0, _rskUtils.toBuffer)(metadata)]);
   const len = getMetadataLength(metadata);
   return len === metadata.length - 2;
 };exports.isValidMetadataLength = isValidMetadataLength;
 
-const isValidMetadata = metadata => {
+const isValidMetadata = (metadata) => {
   if (isValidMetadataLength(metadata)) {
     const decoded = decodeMetadata(metadata);
     return decoded && typeof decoded === 'object' && !Array.isArray(decoded) ? decoded : false;
   }
 };exports.isValidMetadata = isValidMetadata;
 
-const decodeMetadata = metadata => {
+const decodeMetadata = (metadata) => {
   try {
     metadata = Buffer.from([...(0, _rskUtils.toBuffer)(metadata)]);
     if (!isValidMetadataLength(metadata)) throw new Error('Invalid length');
@@ -57,7 +57,7 @@ const decodeMetadata = metadata => {
   }
 };exports.decodeMetadata = decodeMetadata;
 
-const encodeMetadata = metadata => {
+const encodeMetadata = (metadata) => {
   metadata = _cbor.default.encode(metadata);
   const len = metadata.length;
   metadata = Buffer.concat([metadata, Buffer.from('00')]);
@@ -65,7 +65,7 @@ const encodeMetadata = metadata => {
   return metadata;
 };exports.encodeMetadata = encodeMetadata;
 
-const searchMetadata = bytecodeStrOrBuffer => {
+const searchMetadata = (bytecodeStrOrBuffer) => {
   let bytecode = (0, _rskUtils.toBuffer)(bytecodeStrOrBuffer);
   if (!bytecode || !bytecode.length) throw new Error('invalid bytecode');
   let newBytecode = Buffer.from([...bytecode]);

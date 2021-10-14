@@ -1,11 +1,11 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.default = exports.verifyParams = exports.resolver = void 0;var _verifier = _interopRequireDefault(require("./verifier"));
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.verifyParams = exports.resolver = exports.default = void 0;var _verifier = _interopRequireDefault(require("./verifier"));
 var _config = _interopRequireDefault(require("./config"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
-const resolver = imports => path => {
+const resolver = (imports) => (path) => {
   if (!imports) return;
   const parts = path.split('/');
   let file = parts.pop();
-  const result = imports.find(i => i.name === file);
+  const result = imports.find((i) => i.name === file);
   const contents = result ? result.contents : null;
   return { contents };
 };exports.resolver = resolver;

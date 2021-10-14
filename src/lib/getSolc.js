@@ -56,7 +56,7 @@ export function GetSolc ({ solcCache, solcUrl, listUrl }) {
   const load = async (version) => {
     try {
       const versionData = await getVersionData(version)
-      if (!versionData) throw new Error(`Unkown version ${version}`)
+      if (!versionData) throw new Error(`Unknown version ${version}`)
       const { keccak256, path: fileName } = versionData
       let code = await loadFromDisk(fileName)
       if (!code || !isValidHash(code, keccak256)) code = await downloadAndSave(fileName, keccak256)

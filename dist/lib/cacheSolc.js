@@ -4,7 +4,7 @@ async function cacheSolc(config, { releasesOnly, log } = {}) {
   try {
     const getSolc = (0, _getSolc.default)(config);
     let { builds } = await getSolc.getList();
-    if (releasesOnly) builds = builds.filter(b => !b.prerelease);
+    if (releasesOnly) builds = builds.filter((b) => !b.prerelease);
     for (let build of builds.reverse()) {
       const { path, keccak256 } = build;
       const cached = await getSolc.isCached(path);

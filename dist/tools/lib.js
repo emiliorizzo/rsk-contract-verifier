@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.showResult = showResult;exports.saveOutput = saveOutput;exports.verify = verify;exports.readDir = exports.readFile = exports.writeFile = void 0;
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.readFile = exports.readDir = exports.isDir = void 0;exports.saveOutput = saveOutput;exports.showResult = showResult;exports.verify = verify;exports.writeFile = void 0;
 var _verifier = require("../lib/verifier");
 var _verifyFromPayload = require("../lib/verifyFromPayload");
 var _rskJsCli = require("@rsksmart/rsk-js-cli");
@@ -7,9 +7,11 @@ var _fs = _interopRequireDefault(require("fs"));
 var _util = _interopRequireDefault(require("util"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 const writeFile = _util.default.promisify(_fs.default.writeFile);exports.writeFile = writeFile;
 
-const readFile = file => _util.default.promisify(_fs.default.readFile)(_path.default.resolve(file));exports.readFile = readFile;
+const readFile = (file) => _util.default.promisify(_fs.default.readFile)(_path.default.resolve(file));exports.readFile = readFile;
 
 const readDir = _util.default.promisify(_fs.default.readdir);exports.readDir = readDir;
+
+const isDir = (file) => _fs.default.statSync(file).isDirectory();exports.isDir = isDir;
 
 function showResult(result, full) {
   try {

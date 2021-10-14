@@ -1,7 +1,7 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.randomHexString = exports.isReleaseVersion = exports.getHash = exports.forwardBytesDifference = exports.toHexString = void 0;var _rskUtils = require("@rsksmart/rsk-utils");
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.toHexString = exports.randomHexString = exports.isReleaseVersion = exports.getHash = exports.forwardBytesDifference = void 0;var _rskUtils = require("@rsksmart/rsk-utils");
 var _crypto = _interopRequireDefault(require("crypto"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
-const toHexString = stringOrBuffer => {
+const toHexString = (stringOrBuffer) => {
   const str = Buffer.isBuffer(stringOrBuffer) ? stringOrBuffer.toString('hex') : stringOrBuffer;
   return (0, _rskUtils.add0x)(str);
 };exports.toHexString = toHexString;
@@ -20,6 +20,6 @@ const forwardBytesDifference = (a, b) => {
 
 const getHash = (value, encoding = 'hex') => toHexString((0, _rskUtils.keccak256)((0, _rskUtils.toBuffer)(value, encoding)));exports.getHash = getHash;
 
-const isReleaseVersion = version => /^[0-9]+\.[0-9]+\.[0-9]+$/.test(version);exports.isReleaseVersion = isReleaseVersion;
+const isReleaseVersion = (version) => /^[0-9]+\.[0-9]+\.[0-9]+$/.test(version);exports.isReleaseVersion = isReleaseVersion;
 
 const randomHexString = (size = 32) => toHexString(_crypto.default.randomBytes(size));exports.randomHexString = randomHexString;

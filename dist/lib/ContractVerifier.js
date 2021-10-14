@@ -7,7 +7,7 @@ const EVENTS = {
   ERROR: 'error' };exports.EVENTS = EVENTS;
 
 
-const newVerifierService = options => (0, _Services.suicidalForkedService)('verifierService.js', options);
+const newVerifierService = (options) => (0, _Services.suicidalForkedService)('verifierService.js', options);
 
 function ContractVerifier({ timeout, log }) {
   timeout = timeout || 60000;
@@ -16,7 +16,7 @@ function ContractVerifier({ timeout, log }) {
   const verifying = new Map();
   const events = new _events.EventEmitter();
 
-  const verify = payload => {
+  const verify = (payload) => {
     const id = queue.add(payload);
     processNext();
     return id;

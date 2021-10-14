@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.Verifier = Verifier;exports.filterResultErrors = filterResultErrors;exports.parseConstructorArguments = parseConstructorArguments;exports.verifyResults = verifyResults;exports.removeLibraryPrefix = removeLibraryPrefix;exports.getLibrariesPlaceHolders = getLibrariesPlaceHolders;exports.findLibrary = findLibrary;exports.parseLibraries = parseLibraries;exports.resultSettings = resultSettings;exports.isVerified = isVerified;exports.default = void 0;var _compiler = _interopRequireDefault(require("./compiler"));
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.Verifier = Verifier;exports.default = void 0;exports.filterResultErrors = filterResultErrors;exports.findLibrary = findLibrary;exports.getLibrariesPlaceHolders = getLibrariesPlaceHolders;exports.isVerified = isVerified;exports.parseConstructorArguments = parseConstructorArguments;exports.parseLibraries = parseLibraries;exports.removeLibraryPrefix = removeLibraryPrefix;exports.resultSettings = resultSettings;exports.verifyResults = verifyResults;var _compiler = _interopRequireDefault(require("./compiler"));
 var _linker = _interopRequireDefault(require("./linker"));
 var _utils = require("./utils");
 var _rskUtils = require("@rsksmart/rsk-utils");
@@ -25,10 +25,10 @@ function Verifier(options = {}) {
       const usedSources = [];
 
       // wraps resolveImports method to catch used sources
-      const updateUsedSources = path => {
+      const updateUsedSources = (path) => {
         let file = path.split('/').pop();
         const { contents } = resolveImports(path);
-        const hash = contents ? (0, _utils.getHash)(contents) : null;
+        const hash = contents ? (0, _utils.getHash)(contents, 'utf-8') : null;
         usedSources.push({ path, file, hash });
         return resolveImports(path);
       };
@@ -82,8 +82,8 @@ function Verifier(options = {}) {
 function filterResultErrors({ errors }) {
   let warnings;
   if (errors) {
-    warnings = errors.filter(e => e.severity === SEVERITY_WARNING);
-    errors = errors.filter(e => e.severity !== SEVERITY_WARNING);
+    warnings = errors.filter((e) => e.severity === SEVERITY_WARNING);
+    errors = errors.filter((e) => e.severity !== SEVERITY_WARNING);
     errors = errors.length ? errors : undefined;
   }
   return { errors, warnings };
@@ -98,7 +98,7 @@ function generateTryThis(payload, { metadataList, resultMetadataList, encodedCon
     if (payload[key] !== value) tryThis[key] = value;
   };
 
-  const addEncoded = encoded => {
+  const addEncoded = (encoded) => {
     if (encoded.length) addTry(encoded, 'encodedConstructorArguments');
   };
 
@@ -147,7 +147,7 @@ function verifyResults(payload) {
       throw new Error('invalid metadata list length')
     } */
 
-  let decodedMetadata = metadataList.map(m => (0, _solidityMetadata.isValidMetadata)(m));
+  let decodedMetadata = metadataList.map((m) => (0, _solidityMetadata.isValidMetadata)(m));
   for (let i in metadataList) {
     if (decodedMetadata[i] && resultMetadataList[i].length === metadataList[i].length && (0, _solidityMetadata.isValidMetadata)(metadataList[i])) {
       resultMetadataList[i] = metadataList[i];
@@ -159,7 +159,7 @@ function verifyResults(payload) {
   // console.log(decodeConstructorArgs(metadataList.pop(), payload.abi))
 
   const resultBytecode = (0, _rskUtils.add0x)(resultMetadataList.join(''));
-  decodedMetadata = decodedMetadata.filter(m => m);
+  decodedMetadata = decodedMetadata.filter((m) => m);
   const orgBytecode = (0, _rskUtils.add0x)(bytecode);
   const tryThis = generateTryThis(payload, { metadataList, resultMetadataList, encodedConstructorArguments });
   return { resultBytecode, orgBytecode, usedLibraries, decodedMetadata, encodedConstructorArguments, constructorArguments, tryThis };

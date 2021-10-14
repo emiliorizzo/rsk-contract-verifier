@@ -29,7 +29,7 @@ function Compiler({ solcCache } = {}) {
 
   };
 
-  const getSnapshot = async version => {
+  const getSnapshot = async (version) => {
     try {
       let snapshot = await getSolc.load(version);
       return snapshot;
@@ -45,7 +45,7 @@ function Compiler({ solcCache } = {}) {
       }
       const snapshot = await getSnapshot(version || 'latest');
       if (!snapshot.compile) throw new Error(`Can't load snapshot ${version}`);
-      const res = snapshot.compile(input, resolveImports);
+      const res = snapshot.compile(input, { import: resolveImports });
       if (!res) throw new Error('Empty result');
       return JSON.parse(res);
     } catch (err) {
@@ -66,9 +66,9 @@ function Compiler({ solcCache } = {}) {
     return { error: 'unknown error' };
   };
 
-  const getImports = imports => {
+  const getImports = (imports) => {
     if (!imports) return;
-    return path => {
+    return (path) => {
       return getImport(path, imports);
     };
   };

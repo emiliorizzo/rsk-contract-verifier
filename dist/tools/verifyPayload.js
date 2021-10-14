@@ -19,13 +19,13 @@ if (args.HELP || !file) showHelp();
 then(() => {
   process.exit(0);
 }).
-catch(err => {
+catch((err) => {
   if (!args.SILENT) _rskJsCli.log.error(err);
   process.exit(9);
 });
 
 function showHelp() {
-  const parameters = Object.values(opts).map(key => (0, _rskJsCli.argKey)(key));
+  const parameters = Object.values(opts).map((key) => (0, _rskJsCli.argKey)(key));
   console.log();
   console.log('Usage:');
   console.log();

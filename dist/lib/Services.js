@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.forkedService = forkedService;exports.suicidalService = suicidalService;exports.suicidalForkedService = suicidalForkedService;var _child_process = require("child_process");
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.forkedService = forkedService;exports.suicidalForkedService = suicidalForkedService;exports.suicidalService = suicidalService;var _child_process = require("child_process");
 var _path = _interopRequireDefault(require("path"));
 var _fs = _interopRequireDefault(require("fs"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
@@ -22,7 +22,7 @@ function suicidalService(service, { payload, callBack, timeout } = {}) {
       if (error) return reject(new Error(error));
       return resolve(result);
     };
-    service.once('message', msg => {
+    service.once('message', (msg) => {
       sayGoodBye(null, msg);
     });
     service.once('exit', (code, signal) => {
@@ -30,7 +30,7 @@ function suicidalService(service, { payload, callBack, timeout } = {}) {
         sayGoodBye(`Code: ${code}, signal:${signal}`);
       }
     });
-    service.once('error', err => {
+    service.once('error', (err) => {
       sayGoodBye(err);
     });
     if (timeout) {
