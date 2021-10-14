@@ -28,7 +28,7 @@ export function Verifier (options = {}) {
       const updateUsedSources = (path) => {
         let file = path.split('/').pop()
         const { contents } = resolveImports(path)
-        const hash = (contents) ? getHash(contents) : null
+        const hash = (contents) ? getHash(contents, 'utf-8') : null
         usedSources.push({ path, file, hash })
         return resolveImports(path)
       }
